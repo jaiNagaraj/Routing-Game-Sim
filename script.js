@@ -747,21 +747,21 @@ var potentialsCustom = [
 // Cost functions and array
 // Flow 1: 0->3
 function customCost1() {
-	return costsCustom[0][3](Math.round(100 * trafficCustom[0][3]));
+	return costsCustom[0][3](trafficCustom[0][3]);
 }
 // Flow 2: 0->2->3
 function customCost2() {
-	return costsCustom[0][2](Math.round(100 * trafficCustom[0][2])) +
-		costsCustom[2][3](Math.round(100 * trafficCustom[2][3]));
+	return costsCustom[0][2](trafficCustom[0][2]) +
+		costsCustom[2][3](trafficCustom[2][3]);
 }
 // Flow 3: 1->2->3
 function customCost3() {
-	return costsCustom[1][2](Math.round(100 * trafficCustom[1][2])) +
-		costsCustom[2][3](Math.round(100 * trafficCustom[2][3]));
+	return costsCustom[1][2](trafficCustom[1][2]) +
+		costsCustom[2][3](trafficCustom[2][3]);
 }
 // Flow 4: 1->3
 function customCost4() {
-	return costsCustom[1][3](Math.round(100 * trafficCustom[1][3]));
+	return costsCustom[1][3](trafficCustom[1][3]);
 }
 
 // Flow 1: 0->3
@@ -790,7 +790,7 @@ function customPotential() {
 	var pot = 0;
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
-			if (customGraph[i][j] == 1) pot += potentialsCustom[i][j](Math.round(100 * trafficCustom[i][j]));
+			if (customGraph[i][j] == 1) pot += potentialsCustom[i][j](trafficCustom[i][j]);
 		}
 	}
 	return pot;
@@ -862,7 +862,7 @@ async function sendCustomAgents(traffic)
 async function customSim() {
 	document.getElementById("CustomButton").disabled = true;
 	document.getElementById("CustomButton").innerHTML = "Running...";
-	var alpha = 0.05; // convergence rate heuristic
+	var alpha = 1.5; // convergence rate heuristic
 	var timesteps = 1;
 	var alph = 0.4633;
 	var bet = 0.2147
@@ -922,7 +922,7 @@ async function customSim() {
 			flowCarrier = Math.min(flowCost4 - flowCost3, 10) / 10 * alpha;
 			flowTraffic[2] += flowCarrier;
 			flowTraffic[3] -= flowCarrier;
-			flowTraffic[3] = Math.max(0, flowTraffic[0]);
+			flowTraffic[3] = Math.max(0, flowTraffic[3]);
 
 			flowTraffic[2] = Math.min(0.5, flowTraffic[2]);
 		}
@@ -959,7 +959,7 @@ async function customSim() {
 
 		timesteps++;
 	}
-	while (graphPotential != oldGraphPotential);
+	while (Math.abs(graphPotential - oldGraphPotential) > 0.00001);
 
 	document.getElementById("CustomButton").disabled = false;
 	document.getElementById("CustomButton").innerHTML = "Run Simulation";
