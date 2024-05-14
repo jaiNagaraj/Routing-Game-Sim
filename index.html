@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<!-- My CSS -->
+	<style>
+		html
+		{
+		  height: 100%;
+		  width: 100%;
+		}
+
+		canvas
+		{
+			background-color: #ccc;
+			margin: auto;
+			display: block;
+			position: relative;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		#graphSelect
+		{
+			margin: auto;
+			width: 100%;
+		}
+
+		.graph
+		{
+			margin: auto;
+			width: 98%;
+			height: 100%;
+			padding: 2em;
+		}
+	</style>
+
+    <title>Routing Game Simulator</title>
+    </head>
+  
+	<body onload="displayBraess()">
+		<div class="container-fluid">
+    		<h1 class="display-1 text-bold text-center m-2 p-1">Routing Game Simulation</h1>
+			<div class="text-center lead">Select a tab to view a graph and its equilibrium.</div>
+
+		</div>
+		
+		<div class="container-fluid">
+			<div class="btn-group py-4" id="graphSelect">
+				<button type="button" class="btn btn-secondary" onclick="displayBraess()">Braess' Paradox</button>
+				<button type="button" class="btn btn-secondary" onclick="displayPigou()">Pigou's Example</button>
+				<button type="button" class="btn btn-secondary" onclick="displayCustom()">Custom Graph by Me</button>
+				<button type="button" class="btn btn-secondary" onclick="displayAbout()">Learn the Theory</button>
+			</div>
+		</div>
+
+		<div class="container-fluid graph rounded bg-secondary" id="Braess">
+			<div class="h2 text-center">Braess' Paradox</div>
+			<p class="text-center">
+				Braess' paradox isn't really a paradox, it's just a counterintuitive graph. Notice the edge connecting the top and bottom paths — it has a cost of 0 to travel on. Should reduce overall traffic time, right? Well, watch what happens as the agents reach equilibrium.
+			</p>
+			<p class="text-center">
+				(And yes, this DOES reflect real life: some studies have supported lane closures <i>decreasing</i> traffic congestion!)
+			</p>
+
+			<canvas id="BraessCanvas" width="1500" height="500" style="border:1px solid black;">
+			</canvas>
+
+			<div class="container-fluid">
+			<button id="BraessButton" type="button" style="margin: auto;" class="btn btn-primary">Run Simulation</button>
+			</div>
+			
+			<div class="container-fluid bg-light mt-2 p-3" style="display: table;">
+				<div style="display: table-row;" class="m-2">
+					<div class="text-center" style="display: table-cell"></div>
+					<p style="display: table-cell;" class="h3 text-center">Stats Box</p>
+				</div>
+				<div style="display: table-row;">
+					<div class="h5 text-center" style="display: table-cell">
+						Social Cost: <span id="braessSocialCost">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Graph Potential: <span id="braessPotential">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Timesteps: <span id="braessTimesteps">0</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="container-fluid graph rounded bg-secondary" id="Pigou">
+			<div class="h2 text-center">Pigou's Example</div>
+			<p class="text-center">
+				Pigou's example is a simple graph with one constant-cost edge and one variable-cost edge. Here, the variable-cost edge has a linear cost, but some variants have polynomial and even exponential costs to serve as thought experiments.
+			</p>
+
+			<canvas id="PigouCanvas" width="1500" height="500" style="border:1px solid black;">
+			</canvas>
+
+			<div class="container-fluid">
+			<button id="PigouButton" type="button" style="margin: auto;" class="btn btn-primary">Run Simulation</button>
+			</div>
+
+			<div class="container-fluid bg-light mt-2 p-3" style="display: table;">
+				<div style="display: table-row;" class="m-2">
+					<div class="text-center" style="display: table-cell"></div>
+					<p style="display: table-cell;" class="h3 text-center">Stats Box</p>
+				</div>
+				<div style="display: table-row;">
+					<div class="h5 text-center" style="display: table-cell">
+						Social Cost: <span id="pigouSocialCost">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Graph Potential: <span id="pigouPotential">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Timesteps: <span id="pigouTimesteps">0</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="container-fluid graph rounded bg-secondary" id="Custom">
+			<div class="h2 text-center">Custom Example</div>
+			<p class="text-center">
+				Here's a custom graph adapted from <a href="https://vknight.org/Year_3_game_theory_course/Content/Chapter_17_Routing_games/" class="link-info">here.</a> Can you find the Nash flow?
+			</p>
+
+			<canvas id="CustomCanvas" width="1500" height="500" style="border:1px solid black;">
+			</canvas>
+
+			<div class="container-fluid">
+			<button id="CustomButton" type="button" style="margin: auto;" class="btn btn-primary">Run Simulation</button>
+			</div>
+
+			<div class="container-fluid bg-light mt-2 p-3" style="display: table;">
+				<div style="display: table-row;" class="m-2">
+					<div class="text-center" style="display: table-cell"></div>
+					<p style="display: table-cell;" class="h3 text-center">Stats Box</p>
+				</div>
+				<div style="display: table-row;">
+					<div class="h5 text-center" style="display: table-cell">
+						Social Cost: <span id="customSocialCost">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Graph Potential: <span id="customPotential">0</span>
+					</div>
+					<div class="h5 text-center" style="display: table-cell">
+						Timesteps: <span id="customTimesteps">0</span>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="container-fluid graph rounded bg-secondary" id="Theory">
+			<div class="h2 text-center">Nash Equilibrium and Potential Functions</div>
+			<p class="text-center">
+				*insert cool math here*
+			</p>
+		</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="script.js"></script>
+    </body>
+</html>
