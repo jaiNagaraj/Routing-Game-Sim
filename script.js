@@ -1,11 +1,12 @@
 /* Canvas heights are 300x100 */
 
-function displayBraess() {
+//import * as MathJax from 'mathjax/es5/tex-svg'; 
+
+function displayBraess(costVals=["x","x"]) {
 	// display div
 	document.getElementById("Braess").style.display = "block";
 	document.getElementById("Pigou").style.display = "none";
 	document.getElementById("Custom").style.display = "none";
-	document.getElementById("Theory").style.display = "none";
 	// get canvas
 	var canvas = document.getElementById("BraessCanvas");
 	var ctx = canvas.getContext("2d");
@@ -41,6 +42,59 @@ function displayBraess() {
 	ctx.beginPath();
 	ctx.arc(750, 375, 30, 0, 2 * Math.PI);
 	ctx.fill();
+
+	// draw cost equations
+	canvas = document.getElementById("BraessLatexCanvas");
+	ctx = canvas.getContext("2d");
+	let equation = "c(x) = " + costVals[0];
+	let svg = MathJax.tex2svg(equation).firstElementChild;
+	let img = document.createElement('img');
+	img.onload = (e) => {
+	  let tempWidth = e.target.naturalWidth *2;
+	  let tempHeight = e.target.naturalHeight *2;
+	  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 - 300, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+	}
+	img.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg.outerHTML);
+
+	let equation2 = "c(x) = " + costVals[1];
+	let svg2 = MathJax.tex2svg(equation2).firstElementChild;
+	let img2 = document.createElement('img');
+	img2.onload = (e) => {
+	  let tempWidth = e.target.naturalWidth *2;
+	  let tempHeight = e.target.naturalHeight *2;
+	  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 300, canvas.height / 2 - tempHeight / 2 + 120, tempWidth, tempHeight);
+	}
+	img2.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg2.outerHTML);
+
+	let equation3 = "c(x) = 0";
+	let svg3 = MathJax.tex2svg(equation3).firstElementChild;
+	let img3 = document.createElement('img');
+	img3.onload = (e) => {
+	  let tempWidth = e.target.naturalWidth *1.2;
+	  let tempHeight = e.target.naturalHeight *1.2;
+	  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2, tempWidth, tempHeight);
+	}
+	img3.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg3.outerHTML);
+
+	let equation4 = "c(x) = 100";
+	let svg4 = MathJax.tex2svg(equation4).firstElementChild;
+	let img4 = document.createElement('img');
+	img4.onload = (e) => {
+	  let tempWidth = e.target.naturalWidth *1.2;
+	  let tempHeight = e.target.naturalHeight *1.2;
+	  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 300, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+	}
+	img4.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg4.outerHTML);
+
+	let equation5 = "c(x) = 100";
+	let svg5 = MathJax.tex2svg(equation5).firstElementChild;
+	let img5 = document.createElement('img');
+	img5.onload = (e) => {
+	  let tempWidth = e.target.naturalWidth *1.2;
+	  let tempHeight = e.target.naturalHeight *1.2;
+	  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 - 300, canvas.height / 2 - tempHeight / 2 + 120, tempWidth, tempHeight);
+	}
+	img5.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg5.outerHTML);
 }
 
 function displayPigou() {
@@ -48,7 +102,6 @@ function displayPigou() {
 	document.getElementById("Braess").style.display = "none";
 	document.getElementById("Pigou").style.display = "block";
 	document.getElementById("Custom").style.display = "none";
-	document.getElementById("Theory").style.display = "none";
 	// get canvas
 	var canvas = document.getElementById("PigouCanvas");
 	var ctx = canvas.getContext("2d");
@@ -75,7 +128,6 @@ function displayCustom() {
 	document.getElementById("Braess").style.display = "none";
 	document.getElementById("Pigou").style.display = "none";
 	document.getElementById("Custom").style.display = "block";
-	document.getElementById("Theory").style.display = "none";
 
 	// get canvas
 	var canvas = document.getElementById("CustomCanvas");
@@ -115,11 +167,6 @@ function displayCustom() {
 	ctx.beginPath();
 	ctx.arc(1500 - 250, 250, 30, 0, 2 * Math.PI);
 	ctx.fill();
-}
-
-function displayAbout()
-{
-	;
 }
 
 /** CLASSES */
@@ -410,7 +457,9 @@ async function sendBraessAgents(traffic) {
 		// display agents
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		// first, draw the canvas
-		displayBraess();
+		cost1 = "" + costsBraess[0][1](Math.round(100 * trafficBraess[0][1]));
+		cost2 = "" + costsBraess[2][3](Math.round(100 * trafficBraess[2][3]));
+		displayBraess([cost1,cost2]);
 		for (var i = 0; i < agentCount; i++) {
 			if (agents[i] != null) {
 				ctx.fillStyle = "yellow";
