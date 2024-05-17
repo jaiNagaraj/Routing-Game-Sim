@@ -156,7 +156,7 @@ function displayPigou(costVals=["x"], updateFuncs=true) {
 	}
 }
 
-function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
+function displayCustom(costVals=["x^2","x","\\frac{3}{2}x"], updateFuncs=true) {
 	// display div
 	document.getElementById("Braess").style.display = "none";
 	document.getElementById("Pigou").style.display = "none";
@@ -215,12 +215,12 @@ function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
 			img.onload = (e) => {
 			  let tempWidth = e.target.naturalWidth *2;
 			  let tempHeight = e.target.naturalHeight *2;
-			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
 			}
 			img.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg.outerHTML);
 
-			ctx.moveTo(750 + 50, 250);
-			ctx.lineTo(750 + 100, 250 + 50);
+			ctx.moveTo(750 + 150, 250);
+			ctx.lineTo(750 + 300, 250 + 70);
 			ctx.stroke();
 			let equation2 = "c(x) = " + costVals[1];
 			let svg2 = MathJax.tex2svg(equation2).firstElementChild;
@@ -228,7 +228,7 @@ function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
 			img2.onload = (e) => {
 			  let tempWidth = e.target.naturalWidth *2;
 			  let tempHeight = e.target.naturalHeight *2;
-			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 100, canvas.height / 2 - tempHeight / 2 + 100, tempWidth, tempHeight);
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 300, canvas.height / 2 - tempHeight / 2 + 100, tempWidth, tempHeight);
 			}
 			img2.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg2.outerHTML);
 
@@ -238,17 +238,17 @@ function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
 			img3.onload = (e) => {
 			  let tempWidth = e.target.naturalWidth *1.2;
 			  let tempHeight = e.target.naturalHeight *1.2;
-			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2, tempWidth, tempHeight);
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 - 250, canvas.height / 2 - tempHeight / 2 - 30, tempWidth, tempHeight);
 			}
 			img3.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg3.outerHTML);
 
-			let equation4 = "c(x) = 100";
+			let equation4 = "c(x) = 0";
 			let svg4 = MathJax.tex2svg(equation4).firstElementChild;
 			let img4 = document.createElement('img');
 			img4.onload = (e) => {
 			  let tempWidth = e.target.naturalWidth *1.2;
 			  let tempHeight = e.target.naturalHeight *1.2;
-			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 300, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 - 250, canvas.height / 2 - tempHeight / 2 + 30, tempWidth, tempHeight);
 			}
 			img4.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg4.outerHTML);
 
@@ -258,7 +258,7 @@ function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
 			img5.onload = (e) => {
 		  	let tempWidth = e.target.naturalWidth *2;
 		  	let tempHeight = e.target.naturalHeight *2;
-		  	ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2 + 120, tempWidth, tempHeight);
+		  	ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2, canvas.height / 2 - tempHeight / 2 + 120, tempWidth, tempHeight);
 		}
 		img5.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg5.outerHTML);
 	}
