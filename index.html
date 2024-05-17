@@ -105,9 +105,9 @@
 			</p>
 
 			<div class="wrapper">
-				<canvas id="BraessLatexCanvas" width="1500" height="500" style="border:1px solid black;" class="LatexCanvas">
-				</canvas>
 				<canvas id="BraessCanvas" width="1500" height="500" style="border:1px solid black;">
+				</canvas>
+				<canvas id="BraessLatexCanvas" width="1500" height="500" style="border:1px solid black;" class="LatexCanvas">
 				</canvas>
 			</div>
 
@@ -141,8 +141,12 @@
 				Pigou's example is a simple graph with one constant-cost edge and one variable-cost edge. Here, the variable-cost edge has a linear cost, but some variants have polynomial and even exponential costs to serve as thought experiments.
 			</p>
 
-			<canvas id="PigouCanvas" width="1500" height="500" style="border:1px solid black;">
-			</canvas>
+			<div class="wrapper">
+				<canvas id="PigouCanvas" width="1500" height="500" style="border:1px solid black;">
+				</canvas>
+				<canvas id="PigouLatexCanvas" width="1500" height="500" style="border:1px solid black;" class="LatexCanvas">
+				</canvas>
+			</div>
 
 			<div class="container-fluid">
 			<button id="PigouButton" type="button" style="margin: auto;" class="btn btn-primary">Run Simulation</button>
