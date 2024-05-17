@@ -144,7 +144,7 @@ function displayPigou(costVals=["x"], updateFuncs=true) {
 		}
 		img.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg.outerHTML);
 
-		let equation2 = "c(x) = 1";
+		let equation2 = "c(x) = 100";
 		let svg2 = MathJax.tex2svg(equation2).firstElementChild;
 		let img2 = document.createElement('img');
 		img2.onload = (e) => {
@@ -156,7 +156,7 @@ function displayPigou(costVals=["x"], updateFuncs=true) {
 	}
 }
 
-function displayCustom() {
+function displayCustom(costVals=["x^2","x","3/2x"], updateFuncs=true) {
 	// display div
 	document.getElementById("Braess").style.display = "none";
 	document.getElementById("Pigou").style.display = "none";
@@ -200,7 +200,70 @@ function displayCustom() {
 	ctx.beginPath();
 	ctx.arc(1500 - 250, 250, 30, 0, 2 * Math.PI);
 	ctx.fill();
+
+	if (updateFuncs)
+	{
+			// draw cost equations
+			canvas = document.getElementById("CustomLatexCanvas");
+			ctx = canvas.getContext("2d");
+			// clear canvas
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+			let equation = "c(x) = " + costVals[0];
+			let svg = MathJax.tex2svg(equation).firstElementChild;
+			let img = document.createElement('img');
+			img.onload = (e) => {
+			  let tempWidth = e.target.naturalWidth *2;
+			  let tempHeight = e.target.naturalHeight *2;
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+			}
+			img.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg.outerHTML);
+
+			ctx.moveTo(750 + 50, 250);
+			ctx.lineTo(750 + 100, 250 + 50);
+			ctx.stroke();
+			let equation2 = "c(x) = " + costVals[1];
+			let svg2 = MathJax.tex2svg(equation2).firstElementChild;
+			let img2 = document.createElement('img');
+			img2.onload = (e) => {
+			  let tempWidth = e.target.naturalWidth *2;
+			  let tempHeight = e.target.naturalHeight *2;
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 100, canvas.height / 2 - tempHeight / 2 + 100, tempWidth, tempHeight);
+			}
+			img2.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg2.outerHTML);
+
+			let equation3 = "c(x) = 0";
+			let svg3 = MathJax.tex2svg(equation3).firstElementChild;
+			let img3 = document.createElement('img');
+			img3.onload = (e) => {
+			  let tempWidth = e.target.naturalWidth *1.2;
+			  let tempHeight = e.target.naturalHeight *1.2;
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2, tempWidth, tempHeight);
+			}
+			img3.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg3.outerHTML);
+
+			let equation4 = "c(x) = 100";
+			let svg4 = MathJax.tex2svg(equation4).firstElementChild;
+			let img4 = document.createElement('img');
+			img4.onload = (e) => {
+			  let tempWidth = e.target.naturalWidth *1.2;
+			  let tempHeight = e.target.naturalHeight *1.2;
+			  ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 300, canvas.height / 2 - tempHeight / 2 - 120, tempWidth, tempHeight);
+			}
+			img4.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg4.outerHTML);
+
+			let equation5 = "c(x) = " + costVals[2];
+			let svg5 = MathJax.tex2svg(equation5).firstElementChild;
+			let img5 = document.createElement('img');
+			img5.onload = (e) => {
+		  	let tempWidth = e.target.naturalWidth *2;
+		  	let tempHeight = e.target.naturalHeight *2;
+		  	ctx.drawImage(e.target, canvas.width / 2 - tempWidth / 2 + 50, canvas.height / 2 - tempHeight / 2 + 120, tempWidth, tempHeight);
+		}
+		img5.src = 'data:image/svg+xml;base64,' + btoa('<?xml version="1.0" encoding="UTF-8" standalone="no" ?>\n' + svg5.outerHTML);
+	}
 }
+
 
 /** CLASSES */
 class BraessAgent
@@ -556,6 +619,9 @@ async function braessSim() {
 	document.getElementById("braessSocialCost").innerHTML = Math.round(flowSocialCost1 + flowSocialCost2 + flowSocialCost3);
 	do {
 		document.getElementById("braessTimesteps").innerHTML = timesteps;
+		document.getElementById("braessFlow1").innerHTML = Math.round(flowTraffic[0] * 100) / 100;
+		document.getElementById("braessFlow2").innerHTML = Math.round(flowTraffic[1] * 100) / 100;
+		document.getElementById("braessFlow3").innerHTML = Math.round(flowTraffic[2] * 100) / 100;
 		// send out the agents!
 		await sendBraessAgents(flowTraffic);
 
@@ -754,6 +820,8 @@ async function pigouSim() {
 	document.getElementById("pigouSocialCost").innerHTML = Math.round(flowSocialCost1 + flowSocialCost2);
 	do {
 		document.getElementById("pigouTimesteps").innerHTML = timesteps;
+		document.getElementById("pigouFlow1").innerHTML = Math.round(flowTraffic[0] * 100) / 100;
+		document.getElementById("pigouFlow2").innerHTML = Math.round(flowTraffic[1] * 100) / 100;
 		// send out the agents!
 		await sendPigouAgents(flowTraffic);
 
@@ -898,6 +966,11 @@ async function sendCustomAgents(traffic)
 	var agentCount = 0;
 	// generate weighted random dist based on traffic array
 	var rand = weightedRand({ 0: traffic[0], 1: traffic[1], 2: traffic[2], 3: traffic[3] });
+	// update cost functions
+	cost1 = Math.round(costsCustom[0][3](trafficCustom[0][3]) * 1000) / 1000;
+	cost2 = Math.round(costsCustom[2][3](trafficCustom[2][3]) * 1000) / 1000;
+	cost3 = Math.round(costsCustom[1][3](trafficCustom[1][3]) * 1000) / 1000;
+	displayCustom([cost1, cost2, cost3]);
 	// main loop
 	while (true) {
 		var canvas = document.getElementById("CustomCanvas");
@@ -905,7 +978,7 @@ async function sendCustomAgents(traffic)
 		// display agents
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		// first, draw the canvas
-		displayCustom();
+		displayCustom([],false);
 		for (var i = 0; i < agentCount; i++) {
 			if (agents[i] != null) {
 				ctx.fillStyle = "yellow";
@@ -963,7 +1036,7 @@ async function customSim() {
 	trafficCustom[2][3] = flowTraffic[1] + flowTraffic[2];
 	// calculate graph potential
 	var graphPotential = customPotential();
-	document.getElementById("customPotential").innerHTML = graphPotential;
+	document.getElementById("customPotential").innerHTML = Math.round(graphPotential * 10000) / 10000;
 	var oldGraphPotential = customPotential();
 	// calculate initial (optimal) social cost
 	var flowSocialCost1 = customSocialCosts[0]();
@@ -975,6 +1048,10 @@ async function customSim() {
 	// main loop
 	do {
 		document.getElementById("customTimesteps").innerHTML = timesteps;
+		document.getElementById("customFlow1").innerHTML = Math.round(flowTraffic[0] * 100) / 100;
+		document.getElementById("customFlow2").innerHTML = Math.round(flowTraffic[1] * 100) / 100;
+		document.getElementById("customFlow3").innerHTML = Math.round(flowTraffic[2] * 100) / 100;
+		document.getElementById("customFlow4").innerHTML = Math.round(flowTraffic[3] * 100) / 100;
 		// send out the agents!
 		await sendCustomAgents(flowTraffic);
 
@@ -1035,7 +1112,7 @@ async function customSim() {
 		// calculate new graph potentials
 		oldGraphPotential = graphPotential;
 		graphPotential = customPotential();
-		document.getElementById("customPotential").innerHTML = graphPotential;
+		document.getElementById("customPotential").innerHTML = Math.round(graphPotential * 10000) / 10000;
 
 		// calculate new social costs
 		var flowSocialCost1 = customSocialCosts[0]();
