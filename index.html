@@ -61,6 +61,20 @@
 			height: 100%;
 			padding: 2em;
 		}
+
+		.LatexCanvas
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.wrapper
+		{
+			position: relative;
+		}
+
+		
 	</style>
 
     <title>Routing Game Simulator</title>
@@ -90,10 +104,12 @@
 				(And yes, this DOES reflect real life: some studies have supported lane closures <i>decreasing</i> traffic congestion!)
 			</p>
 
-			<canvas id="BraessCanvas" width="1500" height="500" style="border:1px solid black;">
-			</canvas>
-			<canvas id="BraessLatexCanvas" width="1500" height="500" style="border:1px solid black;">
-			</canvas>
+			<div class="wrapper">
+				<canvas id="BraessLatexCanvas" width="1500" height="500" style="border:1px solid black;" class="LatexCanvas">
+				</canvas>
+				<canvas id="BraessCanvas" width="1500" height="500" style="border:1px solid black;">
+				</canvas>
+			</div>
 
 			<div class="container-fluid">
 			<button id="BraessButton" type="button" style="margin: auto;" class="btn btn-primary">Run Simulation</button>
