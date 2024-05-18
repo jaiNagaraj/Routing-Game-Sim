@@ -1022,7 +1022,7 @@ async function sendCustomAgents(traffic)
 async function customSim() {
 	document.getElementById("CustomButton").disabled = true;
 	document.getElementById("CustomButton").innerHTML = "Running...";
-	var alpha = 1.5; // convergence rate heuristic
+	var alpha = 2.5; // convergence rate heuristic
 	var timesteps = 1;
 	var alph = 0.4633;
 	var bet = 0.2147
@@ -1123,7 +1123,7 @@ async function customSim() {
 
 		timesteps++;
 	}
-	while (Math.abs(graphPotential - oldGraphPotential) > 0.00001);
+	while (Math.abs(graphPotential - oldGraphPotential) > 0.000001);
 
 	document.getElementById("CustomButton").disabled = false;
 	document.getElementById("CustomButton").innerHTML = "Run Simulation";
